@@ -1,13 +1,15 @@
 package me.alberto.agrofarm.screens.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
 import me.alberto.agrofarm.R
+import me.alberto.agrofarm.activity.MainActivity
 import me.alberto.agrofarm.databinding.SigninActivityBinding
+import me.alberto.agrofarm.screens.home.DashboardFrag
 
 class SignInActivity : AppCompatActivity() {
 
@@ -18,7 +20,8 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.signin_activity)
 
-        viewModel = ViewModelProvider(this, SignInViewModel.Factorty()).get(SignInViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, SignInViewModel.Factorty()).get(SignInViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -29,20 +32,20 @@ class SignInActivity : AppCompatActivity() {
     private fun observe() {
         viewModel.emptyEmail.observe(this, Observer {
             it ?: return@Observer
-            if (it) binding.emailInput.error = "Email can't be empty"
+            if (it) binding.emailInput.error = "Required field"
         })
 
         viewModel.emptyPassword.observe(this, Observer {
             it ?: return@Observer
-            if (it) binding.passwordInput.error = "Password can't be empty"
+            if (it) binding.passwordInput.error = "Required field"
         })
 
         viewModel.validCredentials.observe(this, Observer {
             it ?: return@Observer
             if (it) {
-
+                startActivity(Intent(this, MainActivity::class.java))
             } else {
-                Snackbar.make(binding.root, "Invalid credentials", Snackbar.LENGTH_LONG).show()
+                binding.passwordField.error = "Invalid email or password"
             }
         })
     }

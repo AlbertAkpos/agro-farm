@@ -3,4 +3,13 @@
     <string name="email_hint">Email</string>
     <string name="sign_in">Sign in</string>
     <string name="welcome">Welcome</string>
+    <string name="add_farmer">Add farmer</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="farmer_details">Farmer\'s Details</string>
+    <string name="farmer_name">Farmer\'s name</string>
+    <string name="farmer_age">Farmer\'s age</string>
+    <string name="farm_details">Farm details</string>
+    <string name="map_key" translatable="false">AIzaSyBhgm7n4aegc_Tr9F4warRE1ZhnsxMaCuY</string>
 </resources>

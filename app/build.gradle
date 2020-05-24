@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs"
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 29
@@ -10,13 +12,22 @@ android {
         enabled = true
     }
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     defaultConfig {
         applicationId "me.alberto.agrofarm"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -44,4 +55,18 @@ dependencies {
 
     //Material design
     implementation 'com.google.android.material:material:1.1.0'
+
+    //Navigation
+    def nav_version = "2.3.0-beta01"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    //Circular image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    //Google map
+    implementation 'com.google.android.gms:play-services:12.0.1'
+    //Mutidex
+    implementation 'com.android.support:multidex:1.0.3'
+
 }
