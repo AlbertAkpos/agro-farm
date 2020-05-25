@@ -3,6 +3,7 @@ package me.alberto.agrofarm.screens.map
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -23,7 +24,7 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.activity_map_acitvity.*
 import me.alberto.agrofarm.R
-import me.alberto.agrofarm.screens.add_farmer.RC_MAP
+import java.util.*
 
 const val RC_LOCATION_PERMISSION = 22
 
@@ -54,7 +55,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         getLocationPermission()
         drawPolygon = draw_polygon
 
-        val supportMapFragment = supportFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment
+        val supportMapFragment =
+            supportFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment
         supportMapFragment.getMapAsync(this)
 
         setupClickListeners()
@@ -83,7 +85,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         drawPolygon.setOnClickListener {
             polygon?.remove()
-            if ( latLngList.size < 3 ) return@setOnClickListener
+            if (latLngList.size < 3) return@setOnClickListener
             //Create polygon
             val polygonOptions = PolygonOptions().addAll(latLngList).clickable(true)
             polygon = gMap.addPolygon(polygonOptions)
@@ -100,12 +102,24 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         save_coordinates.setOnClickListener {
             polygon ?: return@setOnClickListener
+
             val returnIntent = Intent()
-            returnIntent.putExtra("coordinates", latLngList)
+            val geoCoder = Geocoder(this, Locale.getDefault())
+            val addresses = geoCoder.getFromLocation(lastKnownLocation!!.latitude,
+                lastKnownLocation!!.longitude, 1
+                )
+            val farmAddress = addresses[0].getAddressLine(0)
+            val bundle = Bundle()
+            bundle.putString("address", farmAddress)
+            bundle.putSerializable("coordinates", latLngList)
+            bundle.putParcelable("location", lastKnownLocation)
+            returnIntent.putExtra("farm_details", bundle)
             setResult(Activity.RESULT_OK, returnIntent)
             finish()
         }
     }
+
+
 
     private fun getDeviceLocation() {
         try {
@@ -190,3 +204,5 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 }
+
+

@@ -19,7 +19,7 @@ abstract class FarmDatabase : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context,
                         FarmDatabase::class.java,
-                        "farm-databse"
+                        "farm-database"
                     ).build()
                 }
             }

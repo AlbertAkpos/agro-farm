@@ -12,4 +12,5 @@
     <string name="farmer_age">Farmer\'s age</string>
     <string name="farm_details">Farm details</string>
     <string name="map_key" translatable="false">AIzaSyBhgm7n4aegc_Tr9F4warRE1ZhnsxMaCuY</string>
+    <string name="farm_name">Farm name</string>
 </resources>

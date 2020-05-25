@@ -1,6 +1,7 @@
 package me.alberto.agrofarm.database
 
 import androidx.room.*
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -9,8 +10,7 @@ data class Farmer(
     @PrimaryKey(autoGenerate = true)
     val farmerId: Long = 0L,
     val name: String,
-    val age: Int,
-    val address: String
+    val age: Int
 )
 
 @Entity(
@@ -26,7 +26,7 @@ data class Farm(
     val name: String,
     @Embedded
     val location: FarmLocation,
-    val coordinates: List<FarmLocation>,
+    val coordinates: List<LatLng>,
     val farmerOwnerId: Long
 )
 
@@ -50,16 +50,16 @@ data class FarmerWithFarms(
 
 class Converter {
     @TypeConverter
-    fun fromFarmLocationList(coordinates: List<FarmLocation>): String {
+    fun fromFarmLocationList(coordinates: List<LatLng>): String {
         val gson = Gson()
-        val type = object : TypeToken<List<FarmLocation>>(){}.type
+        val type = object : TypeToken<List<LatLng>>(){}.type
         return gson.toJson(coordinates, type)
     }
 
     @TypeConverter
-    fun toFarmLocationList(string: String): List<FarmLocation> {
+    fun toFarmLocationList(string: String): List<LatLng> {
         val gson = Gson()
-        val type = object : TypeToken<List<FarmLocation>>(){}.type
+        val type = object : TypeToken<List<LatLng>>(){}.type
         return gson.fromJson(string, type)
     }
 }

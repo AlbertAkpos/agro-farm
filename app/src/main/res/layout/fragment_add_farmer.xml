@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="me.alberto.agrofarm.viewmodel.MainViewModel" />
     </data>
 
     <ScrollView
@@ -33,12 +35,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="128dp"
-                android:layout_marginEnd="116dp"
-                android:layout_marginRight="116dp"
+                android:layout_marginTop="140dp"
                 android:src="@drawable/ic_camera"
+                android:layout_marginEnd="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/profile_img"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="100dp" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -67,7 +71,8 @@
                     android:id="@+id/email_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
+                    android:inputType="text"
+                    android:text="@={ viewModel.farmerName }"
                     android:textColor="@color/secondaryDarkColor" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -88,32 +93,13 @@
                     android:id="@+id/age_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
+                    android:inputType="number"
+                    android:text="@={ viewModel.farmerAge }"
                     android:textColor="@color/secondaryDarkColor" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/farm_name_field"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:hint="@string/farmer_age"
-                app:boxStrokeColor="@color/secondaryColor"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name_field">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/farm_name_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/secondaryDarkColor" />
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/textView5"
@@ -126,14 +112,70 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/age_field" />
 
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/farm_name_field"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/farm_name"
+                app:boxStrokeColor="@color/secondaryColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/farm_name_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:text="@={ viewModel.farmName }"
+                    android:textColor="@color/secondaryDarkColor" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/location_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@+id/farm_name_field">
+
+                <TextView
+                    android:id="@+id/farm_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{ viewModel.farmAddress }" />
+
+            </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/add_farm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add farm"
+                android:text="Add farm location"
                 android:textAllCaps="false"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/primaryLightColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/location_container" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_farmer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:text="Save"
+                android:textAllCaps="false"
+                android:onClick="@{ () -> viewModel.onAddFarmer() }"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintTop_toBottomOf="@+id/location_container" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
