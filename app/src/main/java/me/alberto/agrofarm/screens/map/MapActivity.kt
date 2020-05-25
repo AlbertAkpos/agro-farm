@@ -102,7 +102,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             polygon ?: return@setOnClickListener
             val returnIntent = Intent()
             returnIntent.putExtra("coordinates", latLngList)
-            setResult(RC_MAP, returnIntent)
+            setResult(Activity.RESULT_OK, returnIntent)
             finish()
         }
     }
