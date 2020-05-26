@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/addFarmer"
         android:name="me.alberto.agrofarm.screens.add_farmer.AddFarmer"
-        android:label="AddFarmer"
+        android:label="Add farmer"
         tools:layout="@layout/fragment_add_farmer"
         >
         <action

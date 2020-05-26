@@ -1,7 +1,6 @@
 package me.alberto.agrofarm.viewmodel
 
 import android.location.Location
-import android.net.Uri
 import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
@@ -21,8 +20,11 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
     var farmName = MutableLiveData<String>()
     var farmerImageUrl = MutableLiveData<String>()
         private set
-    var farmAddress = MutableLiveData<String>()
-        private set
+    private val _farmAddress = MutableLiveData<String>()
+    val farmAddress: LiveData<String>
+        get() = _farmAddress
+
+
     private var farmCoordinates: List<LatLng>? = null
     private var farmLocation: Location? = null
 
@@ -39,33 +41,34 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
         get() = _navigateToDashboard
 
 
-
-
-
     init {
         farmers.observeForever(farmerObserver)
     }
 
     private fun observeFarmer(listOfFarmers: List<Farmer>?) {
 
-        println("""
+        println(
+            """
            
             listOfFarmers: $listOfFarmers
             
             checkFarmerList: $chechFarmersList
             
-        """)
+        """
+        )
 
         if (listOfFarmers.isNullOrEmpty() || farmLocation == null) return
 
 
         if (listOfFarmers != chechFarmersList) {
 
-            println("""
+            println(
+                """
                 
                change in farmers 
                 
-            """)
+            """
+            )
 
             val farmOwnerId = listOfFarmers[listOfFarmers.size - 1].farmerId
             val farmLatLngLocation = FarmLocation(farmLocation!!.latitude, farmLocation!!.longitude)
@@ -83,7 +86,13 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
     }
 
     private fun clearFields() {
-
+        farmerName.value = null
+        farmerAge.value = null
+        farmName.value = null
+        farmerImageUrl.value = null
+        _farmAddress.value = null
+        farmCoordinates = null
+        farmLocation = null
     }
 
 
@@ -99,7 +108,15 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
         if (address == null || coordinates == null) {
             return
         }
-        farmAddress.value = address
+
+        _farmAddress.value = address
+
+        println("""
+            
+           farm address: ${_farmAddress.value}
+            
+        """)
+
         farmCoordinates = coordinates
         farmLocation = location
     }
@@ -110,7 +127,7 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
 
     fun onAddFarmer() {
 
-        if (farmAddress.value.isNullOrEmpty()
+        if (_farmAddress.value.isNullOrEmpty()
             || farmCoordinates.isNullOrEmpty()
             || farmerName.value.isNullOrEmpty()
             || farmerAge.value.isNullOrEmpty()
@@ -120,7 +137,11 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
             return
         }
         chechFarmersList = farmers.value
-        val farmer = Farmer(name = farmerName.value!!, age = farmerAge.value!!.toInt(), image = farmerImageUrl.value!!)
+        val farmer = Farmer(
+            name = farmerName.value!!,
+            age = farmerAge.value!!.toInt(),
+            image = farmerImageUrl.value!!
+        )
 
         addFarmer(farmer)
     }

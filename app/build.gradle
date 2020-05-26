@@ -65,9 +65,12 @@ dependencies {
     //Circular image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     //Google map
-    implementation 'com.google.android.gms:play-services:12.0.1'
+    implementation 'com.google.android.libraries.places:places:2.2.0'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
+
+
     //Mutidex
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
 
     //Room
     def room_version = "2.2.5"

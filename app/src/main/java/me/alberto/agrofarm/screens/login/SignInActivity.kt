@@ -42,7 +42,10 @@ class SignInActivity : AppCompatActivity() {
         viewModel.validCredentials.observe(this, Observer {
             it ?: return@Observer
             if (it) {
-                startActivity(Intent(this, MainActivity::class.java))
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
             } else {
                 binding.passwordField.error = "Invalid email or password"
             }

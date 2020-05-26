@@ -22,7 +22,7 @@
             android:layout_height="@dimen/stat_card_height"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -62,7 +62,7 @@
             android:id="@+id/materialCardView2"
             android:layout_width="150dp"
             android:layout_height="@dimen/stat_card_height"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/secondaryDarkColor"
