@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import me.alberto.agrofarm.R
@@ -29,25 +30,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding =
             DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        setSupportActionBar(binding.mainToolbar)
 
 
         init()
 
-        viewModel.farmerWithFarms.observe(this, Observer {
-            println("""
-                
-               farmwith: ${it.toString()} 
-                
-            """)
-        })
 
-        navController = Navigation.findNavController(this, R.id.nav_container)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setSupportActionBar(binding.mainToolbar)
-        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     private fun init() {
+        navController = Navigation.findNavController(this, R.id.nav_container)
+        NavigationUI.setupActionBarWithNavController(this, navController)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+
         val database = FarmDatabase.getFarmDatabase(applicationContext)
         val repository = FarmRepository(database)
         val viewModelFactorty = MainViewModelFactory(repository)

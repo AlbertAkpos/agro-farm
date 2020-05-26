@@ -1,6 +1,7 @@
 package me.alberto.agrofarm.viewmodel
 
 import android.location.Location
+import android.net.Uri
 import androidx.lifecycle.*
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
@@ -18,20 +19,27 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
     var farmerName = MutableLiveData<String>()
     var farmerAge = MutableLiveData<String>()
     var farmName = MutableLiveData<String>()
-
-    private val farmerObserver = Observer<List<Farmer>> { observeFarmer(it) }
-
-    private var chechFarmers: List<Farmer>? = null
-
-    private val _farmerWithFarms = MutableLiveData<FarmerWithFarms>()
-    val farmerWithFarms = repository.getFarmerWithFarms(1)
-
-
-
-    var farmAddress: String? = null
+    var farmerImageUrl = MutableLiveData<String>()
+        private set
+    var farmAddress = MutableLiveData<String>()
         private set
     private var farmCoordinates: List<LatLng>? = null
     private var farmLocation: Location? = null
+
+    private val farmerObserver = Observer<List<Farmer>> { observeFarmer(it) }
+
+    private var chechFarmersList: List<Farmer>? = null
+
+    private val _farmerWithFarms = MutableLiveData<FarmerWithFarms>()
+    private val farmerWithFarms: LiveData<FarmerWithFarms>
+        get() = _farmerWithFarms
+
+    private val _navigateToDashboard = MutableLiveData<Boolean>()
+    val navigateToDashboard: LiveData<Boolean>
+        get() = _navigateToDashboard
+
+
+
 
 
     init {
@@ -39,11 +47,26 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
     }
 
     private fun observeFarmer(listOfFarmers: List<Farmer>?) {
-        listOfFarmers ?: return
-        if (listOfFarmers.isEmpty()  || chechFarmers.isNullOrEmpty()) return
+
+        println("""
+           
+            listOfFarmers: $listOfFarmers
+            
+            checkFarmerList: $chechFarmersList
+            
+        """)
+
+        if (listOfFarmers.isNullOrEmpty() || farmLocation == null) return
 
 
-        if (listOfFarmers != chechFarmers) {
+        if (listOfFarmers != chechFarmersList) {
+
+            println("""
+                
+               change in farmers 
+                
+            """)
+
             val farmOwnerId = listOfFarmers[listOfFarmers.size - 1].farmerId
             val farmLatLngLocation = FarmLocation(farmLocation!!.latitude, farmLocation!!.longitude)
             val farm = Farm(
@@ -52,14 +75,20 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
                 coordinates = farmCoordinates!!,
                 farmerOwnerId = farmOwnerId
             )
-            println(
-                """
-            farmers: ${farmers.value}
-            about to save farm
-        """
-            )
+
             addFarm(farm)
+            _navigateToDashboard.value = true
+            clearFields()
         }
+    }
+
+    private fun clearFields() {
+
+    }
+
+
+    fun navigateToDashboardDone() {
+        _navigateToDashboard.value = null
     }
 
     fun setFarmAddressAndCoordinates(
@@ -70,33 +99,28 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
         if (address == null || coordinates == null) {
             return
         }
-        farmAddress = address
+        farmAddress.value = address
         farmCoordinates = coordinates
         farmLocation = location
     }
 
+    fun setFarmerImage(string: String) {
+        farmerImageUrl.value = string
+    }
+
     fun onAddFarmer() {
 
-        println("""
-           onAddFarmer called 
-            
-        """)
-
-        if (farmAddress.isNullOrEmpty()
+        if (farmAddress.value.isNullOrEmpty()
             || farmCoordinates.isNullOrEmpty()
             || farmerName.value.isNullOrEmpty()
             || farmerAge.value.isNullOrEmpty()
             || farmName.value.isNullOrEmpty()
+            || farmerImageUrl.value == null
         ) {
             return
         }
-        chechFarmers = farmers.value
-        val farmer = Farmer(name = farmerName.value!!, age = farmerAge.value!!.toInt())
-
-        println("""
-            
-           about to save farmer 
-        """)
+        chechFarmersList = farmers.value
+        val farmer = Farmer(name = farmerName.value!!, age = farmerAge.value!!.toInt(), image = farmerImageUrl.value!!)
 
         addFarmer(farmer)
     }

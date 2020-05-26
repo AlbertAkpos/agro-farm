@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dashboard"
-        android:name="me.alberto.agrofarm.screens.home.DashboardFrag"
+        android:name="me.alberto.agrofarm.screens.dashboard.DashboardFrag"
         android:label="Dashboard"
         tools:layout="@layout/dashboard_frag"
         >
@@ -20,5 +20,9 @@
         android:name="me.alberto.agrofarm.screens.add_farmer.AddFarmer"
         android:label="AddFarmer"
         tools:layout="@layout/fragment_add_farmer"
-        />
+        >
+        <action
+            android:id="@+id/action_addFarmer_to_dashboard"
+            app:destination="@id/dashboard" />
+    </fragment>
 </navigation>

@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import me.alberto.agrofarm.R
 import me.alberto.agrofarm.activity.MainActivity
 import me.alberto.agrofarm.databinding.SigninActivityBinding
-import me.alberto.agrofarm.screens.home.DashboardFrag
 
 class SignInActivity : AppCompatActivity() {
 

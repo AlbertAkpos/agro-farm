@@ -5,12 +5,15 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="me.alberto.agrofarm.viewmodel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".screens.home.DashboardFrag">
+        tools:context=".screens.dashboard.DashboardFrag">
 
 
         <com.google.android.material.card.MaterialCardView
@@ -35,21 +38,22 @@
                     android:drawableTop="@drawable/ic_farmer_icon"
                     android:drawablePadding="10dp"
                     android:gravity="center"
+                    android:text="@{ Integer.toString(viewModel.farmers.size())  }"
                     android:textColor="@color/secondaryDarkColor"
                     android:textSize="35sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:text="500" />
+                    tools:text="500" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Farmers"
                     android:textColor="@color/secondaryDarkColor"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/farmers_count"
-                    android:text="Farmers" />
+                    app:layout_constraintTop_toBottomOf="@+id/farmers_count" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -63,8 +67,7 @@
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/secondaryDarkColor"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-           >
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -86,11 +89,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="230"
+                    android:text="@{Integer.toString(viewModel.farms.size()) }"
                     android:textSize="35sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    tools:text="230" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -107,16 +111,16 @@
             android:id="@+id/add_farmer_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/add_farmer"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             android:backgroundTint="@color/secondaryDarkColor"
+            android:padding="10dp"
+            android:text="@string/add_farmer"
             android:textAllCaps="false"
             app:cornerRadius="15dp"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

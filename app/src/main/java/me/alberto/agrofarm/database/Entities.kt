@@ -1,5 +1,6 @@
 package me.alberto.agrofarm.database
 
+import android.net.Uri
 import androidx.room.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
@@ -10,7 +11,8 @@ data class Farmer(
     @PrimaryKey(autoGenerate = true)
     val farmerId: Long = 0L,
     val name: String,
-    val age: Int
+    val age: Int,
+    val image: String
 )
 
 @Entity(
@@ -62,4 +64,5 @@ class Converter {
         val type = object : TypeToken<List<LatLng>>(){}.type
         return gson.fromJson(string, type)
     }
+
 }
