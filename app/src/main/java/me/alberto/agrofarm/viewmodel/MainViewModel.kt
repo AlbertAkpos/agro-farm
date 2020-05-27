@@ -160,4 +160,8 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
         farmers.removeObserver(farmerObserver)
     }
 
+    fun resetFarmerWithFarm() {
+        _farmerWithFarms.value = null
+    }
+
 }

@@ -3,6 +3,7 @@ package me.alberto.agrofarm.screens.map
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
@@ -123,6 +124,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             //Create polygon
             val polygonOptions = PolygonOptions().addAll(latLngList).clickable(true)
             polygon = gMap.addPolygon(polygonOptions)
+            polygon?.fillColor = Color.GREEN
 
         }
 

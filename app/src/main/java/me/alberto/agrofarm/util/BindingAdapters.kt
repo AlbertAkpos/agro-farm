@@ -28,7 +28,7 @@ fun setRecentlyAddedRecyclerView(recyclerView: RecyclerView, list: List<Farmer>?
     list?.let {
         val shortList = when {
             list.size <= 3 -> list
-            else -> list.subList(list.size - 3, list.size - 1)
+            else -> list.subList(list.size - 3, list.size).reversed()
         }
 
         val adapter = recyclerView.adapter as FarmerListAdapter

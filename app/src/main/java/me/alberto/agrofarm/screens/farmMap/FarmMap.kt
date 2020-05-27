@@ -58,7 +58,7 @@ class FarmMap : AppCompatActivity(), OnMapReadyCallback {
 
         val polygonOptions = PolygonOptions().addAll(farmCoordinates).clickable(true)
         polygon = mMap.addPolygon(polygonOptions)
-        polygon?.fillColor = Color.CYAN
+        polygon?.fillColor = Color.GREEN
 
         val builder = LatLngBounds.builder()
         for (point in farmCoordinates!!){

@@ -43,6 +43,7 @@ class FarmerListFrag : Fragment() {
             val farm = farmerWithFarm.farms[0]
             intent.putExtra("farmer", farm)
             startActivity(intent)
+            viewModel.resetFarmerWithFarm()
         })
 
 
