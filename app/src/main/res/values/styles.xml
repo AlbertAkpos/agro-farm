@@ -10,4 +10,8 @@
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
+    <style name="Toolbar_theme"  parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/primaryTextColor</item>
+    </style>
+
 </resources>

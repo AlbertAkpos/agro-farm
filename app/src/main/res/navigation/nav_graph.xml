@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_dashboard_to_addFarmer"
             app:destination="@id/addFarmer" />
+        <action
+            android:id="@+id/action_dashboard_to_farmerListFrag"
+            app:destination="@id/farmerListFrag" />
     </fragment>
     <fragment
         android:id="@+id/addFarmer"
@@ -25,4 +28,10 @@
             android:id="@+id/action_addFarmer_to_dashboard"
             app:destination="@id/dashboard" />
     </fragment>
+    <fragment
+        android:id="@+id/farmerListFrag"
+        android:name="me.alberto.agrofarm.screens.farmer_list.FarmerListFrag"
+        android:label="List of farmers"
+        tools:layout="@layout/fragment_farmer_list"
+        />
 </navigation>

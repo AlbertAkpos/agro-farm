@@ -20,11 +20,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map_acitvity.*
 import me.alberto.agrofarm.R
 import java.util.*
@@ -50,19 +48,19 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_acitvity)
 
-
         init()
-
         setupClickListeners()
+
 
     }
 
     private fun init() {
         Places.initialize(applicationContext, getString(R.string.map_key))
+        fusedLocationProviderClient = FusedLocationProviderClient(this)
+
         getLocationPermission()
         drawPolygon = draw_polygon
 
-        fusedLocationProviderClient = FusedLocationProviderClient(this)
         val supportMapFragment =
             supportFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment
         supportMapFragment.getMapAsync(this)
@@ -82,7 +80,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 lat = place.latLng!!.latitude
-                long =  place.latLng!!.longitude
+                long = place.latLng!!.longitude
 
                 gMap.moveCamera(
                     CameraUpdateFactory.newLatLngZoom(
@@ -202,6 +200,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             locationPermissionGranted = true
+            getDeviceLocation()
         } else {
             ActivityCompat.requestPermissions(
                 this,
@@ -239,7 +238,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             } else {
                 gMap.isMyLocationEnabled = false
                 gMap.uiSettings.isMyLocationButtonEnabled = false
-                Toast.makeText(this, "Allow app to access device location", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Allow app to access device location", Toast.LENGTH_LONG)
+                    .show()
 
             }
         } catch (error: SecurityException) {

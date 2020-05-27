@@ -10,6 +10,7 @@
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:theme="@style/Toolbar_theme"
             android:background="?attr/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:title="Dashboard"

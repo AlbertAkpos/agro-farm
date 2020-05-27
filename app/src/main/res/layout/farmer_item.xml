@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="farmer"
+            type="me.alberto.agrofarm.database.Farmer" />
+        <variable
+            name="clickListener"
+            type="me.alberto.agrofarm.screens.farmer_list.FarmerListAdapter.FarmerClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/faintBackground"
+            app:strokeWidth="0.5dp"
+            app:cardElevation="5dp"
+            android:onClick="@{ () -> clickListener.onClick(farmer) }"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_img"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setImage="@{ farmer.image }"
+                    tools:src="@drawable/ic_profile" />
+
+                <TextView
+                    android:id="@+id/farmer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="@{ farmer.name }"
+                    android:textColor="@color/secondaryDarkColor"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/profile_img"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Name" />
+
+
+                <TextView
+                    android:id="@+id/farmer_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="@{ Integer.toString(farmer.age) }"
+                    android:textColor="@color/secondaryDarkColor"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@id/farmer_name"
+                    app:layout_constraintStart_toEndOf="@+id/profile_img"
+                    tools:text="Age" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

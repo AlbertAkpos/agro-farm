@@ -9,4 +9,5 @@
   <color name="primaryTextColor">#ffffff</color>
   <color name="secondaryTextColor">#ffffff</color>
   <color name="faintWhite">#85ECD9</color>
+  <color name="faintBackground">#ACABAB</color>
 </resources>

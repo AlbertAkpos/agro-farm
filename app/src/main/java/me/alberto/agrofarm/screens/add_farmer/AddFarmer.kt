@@ -37,7 +37,7 @@ class AddFarmer : Fragment() {
         }
 
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this.activity
+        binding.lifecycleOwner = viewLifecycleOwner
 
 
         setClickListeners()

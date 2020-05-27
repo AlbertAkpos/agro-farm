@@ -33,8 +33,9 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
     private var chechFarmersList: List<Farmer>? = null
 
     private val _farmerWithFarms = MutableLiveData<FarmerWithFarms>()
-    private val farmerWithFarms: LiveData<FarmerWithFarms>
+    val farmerWithFarms: LiveData<FarmerWithFarms>
         get() = _farmerWithFarms
+
 
     private val _navigateToDashboard = MutableLiveData<Boolean>()
     val navigateToDashboard: LiveData<Boolean>
@@ -47,28 +48,11 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
 
     private fun observeFarmer(listOfFarmers: List<Farmer>?) {
 
-        println(
-            """
-           
-            listOfFarmers: $listOfFarmers
-            
-            checkFarmerList: $chechFarmersList
-            
-        """
-        )
 
         if (listOfFarmers.isNullOrEmpty() || farmLocation == null) return
 
 
         if (listOfFarmers != chechFarmersList) {
-
-            println(
-                """
-                
-               change in farmers 
-                
-            """
-            )
 
             val farmOwnerId = listOfFarmers[listOfFarmers.size - 1].farmerId
             val farmLatLngLocation = FarmLocation(farmLocation!!.latitude, farmLocation!!.longitude)
@@ -83,6 +67,16 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
             _navigateToDashboard.value = true
             clearFields()
         }
+    }
+
+    fun getFarmerWithFarm(id: Long) {
+        val farmerFarm = repository.getFarmerWithFarms(id)
+        val farmerFarmObserver = Observer<FarmerWithFarms> { observeFarmerFarm(it) }
+        farmerFarm.observeForever(farmerFarmObserver)
+    }
+
+    fun observeFarmerFarm(farmer: FarmerWithFarms) {
+        _farmerWithFarms.value = farmer
     }
 
     private fun clearFields() {
@@ -110,12 +104,6 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
         }
 
         _farmAddress.value = address
-
-        println("""
-            
-           farm address: ${_farmAddress.value}
-            
-        """)
 
         farmCoordinates = coordinates
         farmLocation = location
