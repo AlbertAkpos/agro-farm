@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboard">
+
+    <fragment
+        android:id="@+id/dashboard"
+        android:name="me.alberto.agrofarm.screens.dashboard.DashboardFrag"
+        android:label="Dashboard"
+        tools:layout="@layout/dashboard_frag"
+        >
+        <action
+            android:id="@+id/action_dashboard_to_addFarmer"
+            app:destination="@id/addFarmer" />
+        <action
+            android:id="@+id/action_dashboard_to_farmerListFrag"
+            app:destination="@id/farmerListFrag" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFarmer"
+        android:name="me.alberto.agrofarm.screens.add_farmer.AddFarmer"
+        android:label="Add farmer"
+        tools:layout="@layout/fragment_add_farmer"
+        >
+        <action
+            android:id="@+id/action_addFarmer_to_dashboard"
+            app:destination="@id/dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/farmerListFrag"
+        android:name="me.alberto.agrofarm.screens.farmer_list.FarmerListFrag"
+        android:label="List of farmers"
+        tools:layout="@layout/fragment_farmer_list"
+        />
+</navigation>
