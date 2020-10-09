@@ -1,6 +1,5 @@
 package me.alberto.agrofarm.database
 
-import android.net.Uri
 import android.os.Parcelable
 import androidx.room.*
 import com.google.android.gms.maps.model.LatLng

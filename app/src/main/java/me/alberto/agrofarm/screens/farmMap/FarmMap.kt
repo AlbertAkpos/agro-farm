@@ -30,6 +30,7 @@ class FarmMap : AppCompatActivity(), OnMapReadyCallback {
         farmCoordinates = intent.getParcelableExtra<Farm>("farmer")?.coordinates
         farmLatLng = LatLng(farmLocation!!.lat, farmLocation!!.long)
 
+      Log.d("farm", "farmCordinates: $farmCoordinates")
         val supportMapFragment =
             supportFragmentManager.findFragmentById(R.id.farm_map) as SupportMapFragment
         supportMapFragment.getMapAsync(this)
@@ -55,13 +56,12 @@ class FarmMap : AppCompatActivity(), OnMapReadyCallback {
         )
 
 
-
         val polygonOptions = PolygonOptions().addAll(farmCoordinates).clickable(true)
         polygon = mMap.addPolygon(polygonOptions)
         polygon?.fillColor = Color.GREEN
 
         val builder = LatLngBounds.builder()
-        for (point in farmCoordinates!!){
+        for (point in farmCoordinates!!) {
             builder.include(point)
         }
         val bounds = builder.build()

@@ -24,7 +24,6 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
     val farmAddress: LiveData<String>
         get() = _farmAddress
 
-
     private var farmCoordinates: List<LatLng>? = null
     private var farmLocation: Location? = null
 
@@ -92,6 +91,7 @@ class MainViewModel(private val repository: FarmRepository) : ViewModel() {
 
     fun navigateToDashboardDone() {
         _navigateToDashboard.value = null
+        resetFarmerWithFarm()
     }
 
     fun setFarmAddressAndCoordinates(

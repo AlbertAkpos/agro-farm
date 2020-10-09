@@ -29,6 +29,8 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "SECRET_KEY_NAME", "\"somestring\""
+
     }
 
     buildTypes {
@@ -36,8 +38,38 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        QA {
+            applicationIdSuffix ".qa"
+            debuggable true
+            buildConfigField "String", "API_URL", "\"https://staging-url.com\""
+        }
     }
 
+    flavorDimensions "version"
+
+    productFlavors {
+        demo {
+            dimension "version"
+            applicationIdSuffix ".demo"
+            versionNameSuffix "-demo"
+        }
+
+        full {
+            dimension "version"
+            applicationIdSuffix ".full"
+            versionNameSuffix "-full"
+        }
+    }
+
+
+    variantFilter{ variant ->
+        def names = variant.flavors*.name
+        if(names.contains("full")) {
+            setIgnore(true)
+        }
+
+    }
 }
 
 dependencies {
@@ -88,4 +120,6 @@ dependencies {
     //Image picker
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
+    //Biometric
+    implementation "androidx.biometric:biometric:1.0.1"
 }
